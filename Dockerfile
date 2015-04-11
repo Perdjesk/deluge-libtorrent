@@ -1,11 +1,9 @@
 FROM debian:stable
 
-ADD command.sh /opt/command.sh
-
 RUN apt-get update && apt-get install --no-install-recommends -y \
     curl python python-twisted python-openssl python-setuptools intltool \
     python-xdg python-chardet geoip-database python-libtorrent python-notify \
-    python-pygame python-glade2 librsvg2-common xdg-utils python-mako lzma
+    python-pygame python-glade2 librsvg2-common xdg-utils python-mako
 
 RUN apt-get install --no-install-recommends -y libboost-all-dev make g++ && \
     mkdir -p /tmp/libtorrent && \
@@ -22,8 +20,8 @@ RUN apt-get install --no-install-recommends -y libboost-all-dev make g++ && \
 
 RUN mkdir -p /tmp/deluge && \
     cd /tmp/deluge && \
-    curl -SL http://download.deluge-torrent.org/source/deluge-1.3.11.tar.lzma -o release.tar.lzma && \
-    tar --lzma -xvf release.tar.lzma && \
+    curl -SL http://download.deluge-torrent.org/source/deluge-1.3.11.tar.gz -o release.tar.gz && \
+    tar -zxvf release.tar.gz && \
     cd deluge* && \
     python setup.py build && \
     python setup.py install && \

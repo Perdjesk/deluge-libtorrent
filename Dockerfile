@@ -1,7 +1,7 @@
 FROM debian:stable
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
-python python-twisted python-openssl python-setuptools intltool python-xdg python-chardet geoip-database python-libtorrent python-notify python-pygame python-glade2 librsvg2-common xdg-utils python-mako lzma
+curl python python-twisted python-openssl python-setuptools intltool python-xdg python-chardet geoip-database python-libtorrent python-notify python-pygame python-glade2 librsvg2-common xdg-utils python-mako lzma
 
 RUN mkdir -p /tmp/deluge && \
     curl -SL http://download.deluge-torrent.org/source/deluge-1.3.11.tar.lzma -o /tmp/deluge/release.tar.lzma
@@ -17,3 +17,5 @@ EXPOSE 8112
 EXPOSE 58846
 
 CMD ["/opt/command.sh"]
+~
+~

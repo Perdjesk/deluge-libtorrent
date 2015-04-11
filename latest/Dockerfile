@@ -35,5 +35,6 @@ VOLUME /data
 
 EXPOSE 8112
 EXPOSE 58846
+EXPOSE 6881
 
 CMD ["/opt/command.sh"]

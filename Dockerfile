@@ -17,5 +17,3 @@ EXPOSE 8112
 EXPOSE 58846
 
 CMD ["/opt/command.sh"]
-~
-~

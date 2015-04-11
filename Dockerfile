@@ -1,6 +1,6 @@
 FROM debian:stable
 
-RUN aptitude update && aptitude --without-recommends -y install \
+RUN apt-get update && apt-get install --no-install-recommends -y \
 python python-twisted python-openssl python-setuptools intltool python-xdg python-chardet geoip-database python-libtorrent python-notify python-pygame python-glade2 librsvg2-common xdg-utils python-mako lzma
 
 RUN mkdir -p /tmp/deluge && \

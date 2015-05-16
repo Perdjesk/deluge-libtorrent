@@ -4,13 +4,16 @@ FROM debian:stable
 RUN apt-get update && apt-get install --no-install-recommends -y \
     curl python python-twisted python-openssl python-setuptools intltool \
     python-xdg python-chardet geoip-database python-libtorrent python-notify \
-    python-pygame python-glade2 librsvg2-common xdg-utils python-mako
+    python-pygame python-glade2 librsvg2-common xdg-utils python-mako && \
+    apt-get clean
 
 # Libtorrent. Deps, compilation, installation and cleaning
-RUN apt-get install --no-install-recommends -y libboost-all-dev make g++ && \
+RUN apt-get update && apt-get install --no-install-recommends -y libboost-all-dev make g++ libssl-dev && \
     mkdir -p /tmp/libtorrent && \
     cd /tmp/libtorrent && \
     curl -SL http://sourceforge.net/projects/libtorrent/files/libtorrent/libtorrent-rasterbar-1.0.4.tar.gz/download -o release.tar.gz && \
+    echo "a2029f10e7ae9f8f1885c6cd308b737482c1d737  release.tar.gz" | sha1sum -c - && \
+    echo "1f567823133b1493b9717afc8334eed691bf0ab452d4a2e0f644989f13ce9db0 release.tar.gz" | sha256sum -c - && \
     tar -zxvf release.tar.gz && \
     cd libtorrent* && \
     ./configure --enable-python-binding -enable-debug=no && \
@@ -18,12 +21,15 @@ RUN apt-get install --no-install-recommends -y libboost-all-dev make g++ && \
     ldconfig && \
     rm -fr /tmp/libtorrent && \
     apt-get purge -y libboost-all-dev make g++ && \
-    apt-get autoremove -y
+    apt-get autoremove -y && \
+    apt-get clean
 
 # Deluge. Compilation, installation and cleaning
 RUN mkdir -p /tmp/deluge && \
     cd /tmp/deluge && \
     curl -SL http://download.deluge-torrent.org/source/deluge-1.3.11.tar.gz -o release.tar.gz && \
+    echo "3129f8a4b857028917626de56c673e409920a3a8  release.tar.gz" | sha1sum -c - && \
+    echo "80b0a2a3460d52a5f53df26a9ce314e3e792f2e3f45b7c389140fd830bdee1b0 release.tar.gz" | sha256sum -c - && \
     tar -zxvf release.tar.gz && \
     cd deluge* && \
     python setup.py build && \

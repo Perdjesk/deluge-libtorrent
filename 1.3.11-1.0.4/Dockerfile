@@ -4,7 +4,8 @@ FROM debian:stable
 RUN apt-get update && apt-get install --no-install-recommends -y \
     curl python python-twisted python-openssl python-setuptools intltool \
     python-xdg python-chardet geoip-database python-libtorrent python-notify \
-    python-pygame python-glade2 librsvg2-common xdg-utils python-mako && \
+    python-pygame python-glade2 librsvg2-common xdg-utils python-mako \
+    supervisor && \
     apt-get clean
 
 # Libtorrent. Deps, compilation, installation and cleaning
@@ -36,14 +37,6 @@ RUN mkdir -p /tmp/deluge && \
     python setup.py install && \
     rm -fr /tmp/deluge
 
-# SH script to start the deluge services
-ADD command.sh /opt/command.sh
-RUN chmod +x /opt/command.sh
-
-# Volumes
-VOLUME /config
-VOLUME /data
-
 # Deluge WebClient
 EXPOSE 8112
 
@@ -53,5 +46,20 @@ EXPOSE 58846
 # BitTorrent incoming
 EXPOSE 6881
 EXPOSE 6881/udp
+
+# Volumes
+VOLUME /config
+VOLUME /log
+VOLUME /data
+
+# add the deluge:deluge user:group 
+RUN adduser --system -shell "/bin/bash" --disabled-password --group --home /var/lib/deluge deluge
+
+# import the supervisor configuration
+ADD *.conf /etc/supervisor/conf.d/
+
+# setup command script file
+ADD command.sh /opt/command.sh
+RUN chmod +x /opt/command.sh
 
 CMD ["/opt/command.sh"]

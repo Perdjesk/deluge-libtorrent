@@ -2,6 +2,7 @@
 
 chown deluge:deluge /config
 chown deluge:deluge /data
+chown deluge:deluge /log
 
 if [ ! -f /config/core.conf ]; then
     supervisord -c /etc/supervisor/supervisord.conf

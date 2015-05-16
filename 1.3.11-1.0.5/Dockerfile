@@ -49,6 +49,7 @@ EXPOSE 6881/udp
 
 # Volumes
 VOLUME /config
+VOLUME /log
 VOLUME /data
 
 # add the deluge:deluge user:group 
@@ -62,5 +63,3 @@ ADD command.sh /opt/command.sh
 RUN chmod +x /opt/command.sh
 
 CMD ["/opt/command.sh"]
-
-

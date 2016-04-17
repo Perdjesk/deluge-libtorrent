@@ -1,15 +1,28 @@
-FROM alpine:edge
+FROM alpine:3.3
 
-RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+#RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.3/testing' >> /etc/apk/repositories
 
-RUN apk add --update boost geoip libexecinfo openssl openssl-dev boost-dev geoip-dev libexecinfo-dev g++ python-dev
+RUN apk add --update boost geoip openssl python python3 openssl-dev boost-dev geoip-dev g++ python-dev python3-dev make automake autoconf
+
+RUN apk add --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing libexecinfo libexecinfo-dev
+
+ADD ax_python_devel.m4 /tmp/libtorrent/ax_python_devel.m4
+ADD ax_boost_python.m4 /tmp/libtorrent/ax_boost_python.m4
 
 RUN mkdir -p /tmp/libtorrent && \
     cd /tmp/libtorrent && \
     wget https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_0_6/libtorrent-rasterbar-1.0.6.tar.gz -O release.tar.gz && \
     tar -zxvf release.tar.gz && \
-    cd libtorrent* 
-#    ./configure --prefix=/usr --enable-python-binding -enable-debug=no --with-boost-system=boost_system --with-libgeoip=system  && \
+    cd libtorrent* && \
+    export CFLAGS="-lstdc++" && \
+#    export PYTHON="python3" && \
+    cp /tmp/libtorrent/ax* m4/
+#    autoconf && \
+#    aclocal && \
+#    automake && \
+#    ./configure --enable-python-binding -enable-debug=no --with-boost-system=boost_system  --with-boost-python=boost_python --with-libgeoip=system && \
+#    make -j4 CXXFLAGS="-Wno-cpp" CFLAGS="-w" install
+#    ldconfig 
 #    make -j4 install && \
 #    ldconfig && \
 #    rm -fr /tmp/libtorrent && \

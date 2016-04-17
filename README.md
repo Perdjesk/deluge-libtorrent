@@ -7,6 +7,7 @@ cd alpine-autotools
 docker build -t alpine-autotools .
 docker run -it alpine-autotools sh
 cd /tmp/libtorrent/libtorrent*
+export CFLAGS="-lstdc++"
 ./configure --prefix=/usr --enable-python-binding -enable-debug=no --with-boost-system=boost_system --with-libgeoip=system
 ```
 

@@ -6,7 +6,6 @@ ADD boost-build /usr/share/boost-build
 
 RUN apk add --update boost geoip libexecinfo openssl openssl-dev boost-dev geoip-dev libexecinfo-dev g++ ccache python-dev
 
-ADD test.py /tmp/libtorrent/bindings/python
 
 RUN mkdir -p /tmp/libtorrent && \
     cd /tmp/libtorrent && \
@@ -23,7 +22,8 @@ RUN mkdir -p /tmp/libtorrent && \
 #    ldconfig && \
 #    rm -fr /tmp/libtorrent && \
 #    apk del g++ boost-dev boost-dev geoip-dev openssl-dev python-dev linux-headers
-    
+
+ADD test.py /tmp/libtorrent/libtorrent-1.0.9/bindings/python/test.py   
 
 # Deluge WebClient
 #EXPOSE 8112

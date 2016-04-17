@@ -1,0 +1,5 @@
+/tmp/libtorrent/libtorrent-rasterbar-1.0.9/bindings/python # LD_LIBRARY_PATH=. python test.py
+Traceback (most recent call last):
+  File "test.py", line 3, in <module>
+    import libtorrent as lt
+ImportError: Error relocating /tmp/libtorrent/libtorrent-rasterbar-1.0.9/bindings/python/libtorrent.so: _ZN5boost6python6detail11init_moduleEPKcPFvvE: symbol not found
